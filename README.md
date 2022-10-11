@@ -42,13 +42,13 @@ dalam membuat Histrogram untuk distribusi Geometrik, kita bisa menggunakan fungs
 hist(rgeom(n, p),
      main="Histogram Geometrik",
      xlim = c(0,30),
-     xlab="Successes (X)",
+     xlab="X",
      col="yellow",
-     ylab = "Probability (frequency)")
+     ylab = "Frequency")
 ```
 sehingga didapatkan gambar histogram distribusi Geometrik seperti dibawah ini :
 
-![1D](https://user-images.githubusercontent.com/110555492/195081459-d35e94e8-b426-4f22-a807-f44ec3547c89.jpeg)
+![1D](https://user-images.githubusercontent.com/110555492/195099683-764a48c2-cde1-4993-9d72-ce4a44a3f7de.png)
 
 **e. Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Geometrik.**
 
@@ -65,3 +65,177 @@ varians = 20
 ```
 ![1E](https://user-images.githubusercontent.com/110555492/195088903-a67a1c5c-6bed-413c-945f-cfdb528fcc58.jpeg)
 
+# 2. Terdapat 20 pasien menderita Covid19 dengan peluang sembuh sebesar 0.2. Tentukan :
+
+**a. Peluang terdapat 4 pasien yang sembuh.**
+
+Kita dapat melakukan penyelesaian soal ini menggunakan distribusi binomial dengan fungsi 
+```
+dbinom(n(A), n(S), p)
+
+keterangan :
+n(A) = Kardinalitas Event
+n(S) = Kardinalitas Sample Space
+p = Probabilitas
+``` 
+dengan rincian kode sebagai berikut :
+```R
+nA <- 4
+nS <- 20
+p <- 0.2
+dbinom(nA, nS, p)
+```
+sehingga dihasilkan output :
+```
+0.2181994
+```
+![2A](https://user-images.githubusercontent.com/110555492/195103092-bebdde6e-ade9-4b12-ae94-3d3909458976.png)
+
+**b. Gambarkan grafik histogram berdasarkan kasus tersebut.**
+
+dalam membuat Histrogram untuk distribusi Binomial, kita bisa menggunakan fungsi `hist()` dengan parameter fungsi yaitu `rbinom(nA, nS, p)` dengan rincian kode sebagai berikut :
+```R
+hist(rbinom(nA, nS, p),
+     main="Histogram Binomial",
+     xlim = c(1,7),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency")
+```
+sehingga didapatkan gambar histogram distribusi Binomial sebagai berikut :
+![2B](https://user-images.githubusercontent.com/110555492/195109876-9b6bc7d1-24fb-4d9b-a4a8-65e5e0db039a.png)
+
+**c. Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Binomial.**
+
+untuk mendapatkan Rataan dan Varian dari Distribusi Binomial, kita memerlukan kedua rumus tersebut dari distribusi Binomial, yakni:
+```
+μ = n(S) * p
+σ² = n(s) * p * q
+
+Keterangan:
+n(s) = Kardinalitas Sample Space
+p = Probabilitas sukses
+q = (1 - p) = Probabilitas gagal
+```
+dengan rincian kode sebagai berikut:
+```R
+q <- 1 - p
+rataan <- nS * p
+varian <- nS * p * q
+```
+sehingga didapatkan hasil rataan dan varian sebagai berikut:
+```
+rataan = 4
+varian = 3.2
+```
+![2C](https://user-images.githubusercontent.com/110555492/195112504-80a9020e-1bd0-4b2a-9439-18415d4c736d.png)
+
+# 3. Diketahui data dari  sebuah tempat bersalin di rumah sakit tertentu menunjukkan rata-rata historis 4,5 bayi lahir di rumah sakit ini setiap hari. (gunakan Distribusi Poisson)
+
+**a. Berapa peluang bahwa 6 bayi akan lahir di rumah sakit ini besok?**
+
+untuk melakukan penyelesaian soal ini dapat menggunakan distribusi Poison dengan fungsi `dpois(nA, lamda)` dengan rincian kode sebagai berikut:
+```R
+nA <- 6
+lamda <- 4.5
+dpois(nA, lamda, log=FALSE)
+```
+sehingga dihasilkan output :
+```
+0.1281201
+```
+![3A](https://user-images.githubusercontent.com/110555492/195120124-b85b3ce3-3746-4ab2-84c5-3c8f1625ce6f.png)
+
+**b. simulasikan dan buatlah histogram kelahiran 6 bayi akan lahir di rumah sakit ini  selama setahun (n = 365)**
+
+untuk membuat Histrogram untuk distribusi Binomial, kita bisa menggunakan fungsi `hist()` dengan parameter fungsi yaitu 
+```
+rpois(n, lamda)
+
+Keterangan :
+n = jumlah hari
+lamda = rata-rata historis
+``` 
+dengan rincian kode sebagai berikut :
+```R
+n <- 365
+hist(rpois(n, lamda),
+     main="Histogram Poisson",
+     xlim = c(0,13),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency")
+```
+sehingga dihasilkan gambar histogram distribusi Poisson sebagai berikut:
+![3B](https://user-images.githubusercontent.com/110555492/195120143-b7d3908e-7b48-4965-949b-7a9408e55cbb.png)
+
+**c. dan bandingkan hasil poin a dan b , Apa kesimpulan yang bisa didapatkan**
+
+
+**d. Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Poisson.** 
+
+untuk mendapatkan nilai rataan dan varian dari distribusi Poission kita harus mengetahui kedua rumus tersebut, yaitu:
+```
+μ = lamda
+σ² = lamda
+```
+dengan rincian kode sebagai berikut:
+```R
+rataan <- lamda
+varian <- lamda
+```
+sehingga dihasilkan rataan dan varian yaitu:
+```
+rataan = 4.5
+varian = 4.5
+```
+![3C](https://user-images.githubusercontent.com/110555492/195120158-a17d2140-4ee3-4d9b-aae8-7455b00e4987.png)
+
+# 4. Diketahui nilai x = 2 dan v = 10. Tentukan:
+
+**a. Fungsi Probabilitas dari Distribusi Chi-Square.**
+
+Untuk melakukan penyelesaian dari distribusi Chi-Square bisa menggunakan bantuan fungsi `dchisq()` sehingga dapat diselesaikan dengan rincian kode sebagai berikut:
+```R
+x <- 2
+v <- 10
+dchisq(x, v, log=FALSE)
+```
+sehingga didapatkan output :
+```
+0.007664155
+```
+![4A](https://user-images.githubusercontent.com/110555492/195126975-4b758b08-b92f-4ba9-a567-bdaae4cf94e7.png)
+
+**b. Histogram dari Distribusi Chi-Square dengan 100 data random.**
+
+Untuk membuat Histrogram untuk distribusi Chi-Square, kita bisa menggunakan fungsi `hist()` dengan parameter fungsi yaitu `rchisq(n, v)` dengan rincian kode sebagai berikut :
+```R
+n <- 100
+hist(rchisq(n, v),
+     main="Histogram Chi-Square",
+     xlim = c(0,35),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency")
+```
+sehingga hasil dari histogram distribusi Chi-Square akan terlihat seperti dibawah ini:
+![4B](https://user-images.githubusercontent.com/110555492/195128154-4e9365f6-ce4f-4496-96da-63e30503a84c.png)
+
+**c. Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Chi-Square.**
+Untuk mencari rerata (μ) dan varians (σ²), kita dapat menggunakan rumus rataan dan varians dari distribusi Geometrik yakni :
+```
+μ = v
+σ² = 2 * v
+```
+dengan rincian kode sebagai berikut :
+```R
+rerata <- v
+varians <- 2 * v
+```
+Sehingga didapatkan rerata dan varians yaitu :
+```
+rerata = 10
+varians = 20
+```
+![4C](https://user-images.githubusercontent.com/110555492/195140137-cfde2b40-156b-49b0-bdd3-0d927526f66d.png)
