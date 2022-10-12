@@ -33,7 +33,7 @@ sehingga didapatkan hasil :
 
 **c. Bandingkan Hasil poin a dan b , apa kesimpulan yang bisa didapatkan?**
 
-dari hasil pada poin a dengan peluang 1.024 dengan poin b dengan peluang 0.1035 dapat disimpulkan bahwa poin b memiliki peluang lebih besar dibandingkan dengan poin a karena poin b merupakan distribusi geometrik bersifat acak, sedangkan poin a menghasilkan peluang tetap karena distribusi geomteriknya selalu sama
+dari hasil pada poin a dengan peluang 1.024 dengan poin b dengan peluang 0.1035 dapat disimpulkan bahwa poin b memiliki peluang lebih besar dibandingkan dengan poin a karena poin b merupakan distribusi geometrik bersifat acak, sedangkan poin a menghasilkan peluang tetap karena distribusi geomteriknya selalu konstan dan sama.
 
 **d. Histogram Distribusi Geometrik , Peluang X = 3 gagal Sebelum Sukses Pertama**
 
@@ -171,6 +171,7 @@ sehingga dihasilkan gambar histogram distribusi Poisson sebagai berikut:
 
 **c. dan bandingkan hasil poin a dan b , Apa kesimpulan yang bisa didapatkan**
 
+ Poin a menggunakan fungsi `dpois()` sehingga peluang yang dihasilkan akan selalu konstan dan sama. berbeda dengan poin b menggunakan fungsi `rpois()`, peluang yang dihasilkan sesuai dengan random eksperimen sehingga hasilnya akan berbeda-beda. dari poin a dan poin b dapat disimpulkan bahwa keduanya memiliki peluang yang tidak jauh beda apabila hasil pada poin a kita asumsikan untuk 365 hari.
 
 **d. Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Poisson.** 
 
@@ -239,3 +240,151 @@ rerata = 10
 varians = 20
 ```
 ![4C](https://user-images.githubusercontent.com/110555492/195140137-cfde2b40-156b-49b0-bdd3-0d927526f66d.png)
+
+# 5. Diketahui bilangan acak (random variable) berdistribusi exponential (λ = 3). Tentukan
+
+**a. Fungsi Probabilitas dari Distribusi Exponensial**
+
+untuk melakukan penyelesaian ini, kita dapat memanfaatkan fungsi `dnorm()` dengan parameter `x = 10, λ = 3`, dengan rincian kode sebagai berikut:
+```R
+x <- 10
+lamda <- 3
+dexp(x, lamda, log=FALSE)
+```
+sehingga didapatkan output yaitu:
+```
+2.807287e-13
+```
+![5A](https://user-images.githubusercontent.com/110555492/195298578-2d177a7e-9f9b-49d2-b539-1223f7a3ade9.png)
+
+**b. Histogram dari Distribusi Exponensial untuk 10, 100, 1000 dan 10000 bilangan random**
+
+Untuk membuat Histogram Distribusi Eksponensial untuk `n = 10, 100, 1000, dan 10000`, dibutuhkan 4 histogram dengan permasing-masing dari nilai n. dibantu dengan fungsi `hist()` dengan parameter fungsi `rexp(n, λ)` dengan λ = 3, dengan rincian kode sebagai berikut:
+```R
+set.seed(1)
+hist(rexp(n <- 10, x),
+     main="Histogram Exponential Distribution",
+     xlim = c(0,5),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency")
+hist(rexp(n <- 100,x), 
+     main="Histogram Exponential Distribution",
+     xlim = c(0,5),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency")
+hist(rexp(n <- 1000, x), 
+     main="Histogram Exponential Distribution",
+     xlim = c(0,5),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency")
+hist(rexp(n <- 10000,x), 
+     main="Histogram Exponential Distribution",
+     xlim = c(0,5),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency")
+par(mfrow = c(2,2))
+```
+sehingga didapatkan 4 gambar histogram sebagai berikut
+![5B](https://user-images.githubusercontent.com/110555492/195279873-918d356d-80eb-47b9-b28f-a34e3009ae93.png)
+
+**c. Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Exponensial untuk n = 100 dan λ = 3**
+
+untuk mencari rataan dan varian dari distribusi Exponensial, kita bisa menggunakan bantuan fungsi `mean()` dan `var()` dengan paramater fungsi 
+```R 
+ranExp = rexp(n = 100, rate = 3)
+```
+dengan rincian kode sebagai berikut:
+```R
+rataan <- mean(ranExp)
+varian <- var(ranExp)
+```
+sehingga didapatkan hasil rerata dan varian yaitu :
+```
+rerata = 0.3435588
+varian = 0.0974443
+```
+![5C](https://user-images.githubusercontent.com/110555492/195276158-e5834485-bfb1-4e0b-ac1c-d46642e16563.png)
+
+# 6. Diketahui generate random nilai sebanyak 100 data, mean = 50, sd = 8. Tentukan
+
+**a. Fungsi Probabilitas dari Distribusi Normal P(X1 ≤ x ≤ X2), hitung Z-Score Nya dan plot data generate randomnya dalam bentuk grafik. Petunjuk(gunakan fungsi plot()).**
+```
+Keterangan : 
+X1 = Dibawah rata-rata 
+X2 = Diatas rata-rata
+Contoh data :
+1,2,4,2,6,3,10,11,5,3,6,8
+rata-rata = 5.083333
+X1 = 5
+X2 = 6
+```
+penyelesaian ini dapat dilakukan dengan bantuan fungsi `dnorm()` dengan parameter seperti pada soal yaitu: `n = 100 data, mean = 50, dan sd(standar deviasi) = 8` selanjutnya untuk mencari Z-Score dapat menggunakan rumus :
+```
+Z = (x - mean)/sd
+```
+sehingga rincian kodenya akan seperti berikut:
+```R
+set.seed(1)
+n <- 100
+mean <- 50
+sd <- 8
+ranNormal <- rnorm(n, mean , sd)
+x1 <- floor(mean(ranNormal))
+x2 <- ceiling(mean(ranNormal))
+z1 <- (x1 - mean)/sd
+z2 <- (x2 - mean)/sd
+plot(ranNormal, col = "red", pch = 16)
+```
+sehingga dihasilkan gambar plot distribusi Normal dengan random eksperimen dibawah ini:
+![5A](https://user-images.githubusercontent.com/110555492/195325920-18db3de1-7630-43c1-b675-a1a1ad7a5abc.png)
+
+selanjutnya, hasil dari z1 dan z2 yaitu:
+```
+z1 = 0
+z2 = 0.125
+```
+![5A2](https://user-images.githubusercontent.com/110555492/195326312-5bcfc9fd-4d10-40e2-8cdf-2d1c8324028f.png)
+
+**b. Generate Histogram dari Distribusi Normal dengan breaks 50 dan** 
+```
+format penamaan: 
+NRP_Nama_Probstat_{Nama Kelas}_DNhistogram
+Contoh :
+312312312_Rola_Probstat_A_DNhistogram
+```
+
+dalam membuat histogram distribusi normal dibutuhkan bantuan fungsi `hist()` dengan paramter fungsi `rnorm(n = 100, mean = 50, sd = 8, dengan rincian kode sebagai berikut :
+```R
+set.seed(1)
+hist(rnorm(n = 100, mean = 50, sd = 8),
+     main="5025211001_Andika Laksana Putra_Probstat_A_DNhistogram",
+     xlim = c(20,80),
+     xlab="X",
+     col="yellow",
+     ylab = "Frequency",
+     breaks = 50)
+```
+sehingga didapatkan gambar histogram distribusi Normal sebagai berikut:
+![6B](https://user-images.githubusercontent.com/110555492/195292988-7da48809-f5c6-4aff-80ae-6b94becf82ba.png)
+
+**c. Nilai Varian (σ²) dari hasil generate random nilai Distribusi Normal.**
+- **Gunakan set.seed(1)**
+- **Gunakan fungsi bawaan R**
+
+untuk mencari nilai varian dari generate random nilai distribusi Normal bisa menggunakan bantuan fungsi `var()` dengan parameter fungsi :
+```R
+ranNormal = rnorm(n = 100, μ = 50, σ = 8)
+```
+dengan rincian kode sebagai berikut:
+```R
+varian <- var(ranNormal)
+```  
+sehingga didapatkan hasil varian yaitu:
+```
+varian = 51.63277
+```
+![6C](https://user-images.githubusercontent.com/110555492/195286007-87ba41cc-acdd-4e4e-81e0-4781a31b28a3.png)
